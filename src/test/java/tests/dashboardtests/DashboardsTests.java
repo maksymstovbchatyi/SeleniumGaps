@@ -8,6 +8,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import tests.AbstractTest;
 import tests.dashboardtests.model.PersonModelData;
+import util.Config;
+import util.Constants;
 import util.JsonUtil;
 
 public class DashboardsTests extends AbstractTest {
@@ -27,7 +29,7 @@ public class DashboardsTests extends AbstractTest {
 
     @Test
     public void loginTest() {
-        loginPage.goTo("https://d1uh9e7cu07ukd.cloudfront.net/selenium-docker/vendor-app/index.html");
+        loginPage.goTo(Config.get(Constants.DASHBOARD_TEST_URL));
         Assert.assertTrue(loginPage.isAt());
         loginPage.login(testData.username(), testData.password());
     }

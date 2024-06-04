@@ -7,6 +7,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import tests.AbstractTest;
 import tests.flightreservation.model.FlightReservationModel;
+import util.Config;
+import util.Constants;
 import util.JsonUtil;
 
 public class FlightReservationTest extends AbstractTest {
@@ -23,7 +25,7 @@ public class FlightReservationTest extends AbstractTest {
     @Test
     public void userRegistrationTest() {
         RegistrationPage registrationPage = new RegistrationPage(driver);
-        registrationPage.goTo("https://d1uh9e7cu07ukd.cloudfront.net/selenium-docker/reservation-app/index.html");
+        registrationPage.goTo(Config.get(Constants.FLIGHT_RESERVATION_URL));
         Assert.assertTrue(registrationPage.isAt());
 
         registrationPage.enterUserDetails(testData.firstName(), testData.lastName());

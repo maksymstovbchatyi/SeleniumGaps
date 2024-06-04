@@ -12,8 +12,13 @@ public class Demo {
 //            throw new RuntimeException(e);
 //        }
 
-        PersonModelData testData = JsonUtil.getTestData("src/test/resources/test-data/dashboard/john.json", PersonModelData.class);
-        System.out.println(testData);
+//        PersonModelData testData = JsonUtil.getTestData("src/test/resources/test-data/dashboard/john.json", PersonModelData.class);
+//        System.out.println(testData);
+
+
+        Config.initialize();
+      //  Config.loadProperties();
+
 
 
     }
