@@ -4,7 +4,6 @@ import com.google.common.util.concurrent.Uninterruptibles;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import listener.TestListener;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -28,7 +27,7 @@ public abstract class AbstractTest {
     protected WebDriver driver;
 
     @BeforeSuite
-    public void init(){
+    public void init() {
         Config.initialize();
     }
 
@@ -39,8 +38,8 @@ public abstract class AbstractTest {
 //        } else {
 //            this.driver = getLocalDriver();
 //        }
-        this.driver = getLocalDriver();//Boolean.parseBoolean(Config.get(Constants.GRID_ENABLED)) ? getRemoteDriver() : getLocalDriver();
-        this.driver.manage().window().fullscreen();
+        this.driver = Boolean.parseBoolean(Config.get(Constants.GRID_ENABLED)) ? getRemoteDriver() : getLocalDriver();
+        this.driver.manage().window().maximize();
         iTestContext.setAttribute(Constants.DRIVER, this.driver);
     }
 
@@ -75,7 +74,7 @@ public abstract class AbstractTest {
     }
 
     @AfterMethod
-    public void sleep(){
+    public void sleep() {
         Uninterruptibles.sleepUninterruptibly(Duration.ofSeconds(5));
     }
 }

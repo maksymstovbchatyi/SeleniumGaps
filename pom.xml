@@ -11,7 +11,6 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <selenium.java.version>4.16.0</selenium.java.version>
     <logback.version>1.4.14</logback.version>
     <testng.version>7.9.0</testng.version>
     <jackson.version>2.16.1</jackson.version>
@@ -28,7 +27,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>${selenium.java.version}</version>
+      <version>4.21.0</version>
     </dependency>
     <!-- logging library -->
     <!-- https://www.baeldung.com/logback -->
