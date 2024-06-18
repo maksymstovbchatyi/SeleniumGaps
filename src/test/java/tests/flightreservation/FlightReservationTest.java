@@ -64,5 +64,6 @@ public class FlightReservationTest extends AbstractTest {
         Assert.assertTrue(flightConfirmationPage.isAt());
         Assert.assertEquals(flightConfirmationPage.getPrice(), testData.expectedPrice());
     }
+ 
 
 }
