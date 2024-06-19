@@ -15,7 +15,11 @@ pipeline {
         }
 
         stage("Push image") {
+            environment{
+                DOCKER_HUB = credentials('dockerhub-creds')
+            }
             steps {
+                sh 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
                 sh "docker push goldengros/selenium"
             }
         }
@@ -23,7 +27,7 @@ pipeline {
 
     post {
         always {
-            echo "doing clean up"
+           sh "docker logout"
         }
     }
 }
