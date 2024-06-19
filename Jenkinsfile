@@ -1,29 +1,29 @@
 pipeline {
     agent any
 
-    stages{
-         stage("Build jar") {
-                   steps {
-                       sh "mvn clean package -DskipTests"
-                   }
-               }
+    stages {
+        stage("Build jar") {
+            steps {
+                sh "mvn clean package -DskipTests"
+            }
+        }
 
-               stage("Build docker") {
-                   steps {
-                       sh "docker build -t=goldengros/selenium ."
-                   }
-               }
+        stage("Build docker") {
+            steps {
+                sh "docker build -t=goldengros/selenium ."
+            }
+        }
 
-               stage("Push image") {
-                   steps {
-                       sh "docker push goldengros/selenium"
-                   }
-
-    }
-    post{
-        always{
-           echo "doing clean up"
+        stage("Push image") {
+            steps {
+                sh "docker push goldengros/selenium"
+            }
         }
     }
 
+    post {
+        always {
+            echo "doing clean up"
+        }
+    }
 }
