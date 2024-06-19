@@ -1,10 +1,18 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_HUB = credentials('dockerhub-creds')
+    }
+
     stages {
         stage("Build jar") {
             steps {
-                sh 'mvn clean package -DskipTests'
+                script {
+                    docker.image('maven:3.8.1-jdk-11').inside {
+                        sh "mvn clean package -DskipTests"
+                    }
+                }
             }
         }
 
@@ -15,19 +23,19 @@ pipeline {
         }
 
         stage("Push image") {
-            environment{
-                DOCKER_HUB = credentials('dockerhub-creds')
-            }
             steps {
-                sh 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
-                sh "docker push goldengros/selenium"
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
+                        sh "docker push goldengros/selenium"
+                    }
+                }
             }
         }
     }
 
     post {
         always {
-           sh "docker logout"
+            sh "docker system prune -f"
         }
     }
 }
