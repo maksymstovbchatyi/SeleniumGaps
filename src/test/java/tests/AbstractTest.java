@@ -38,7 +38,7 @@ public abstract class AbstractTest {
 //        } else {
 //            this.driver = getLocalDriver();
 //        }
-        this.driver = getLocalDriver();
+        this.driver = Boolean.parseBoolean(Config.get(Constants.GRID_ENABLED)) ? getRemoteDriver() :getLocalDriver();
         this.driver.manage().window().maximize();
         iTestContext.setAttribute(Constants.DRIVER, this.driver);
         //Boolean.parseBoolean(Config.get(Constants.GRID_ENABLED)) ? getRemoteDriver() :
