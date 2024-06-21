@@ -1,41 +1,35 @@
 pipeline {
-    agent any
-
-    environment {
-        DOCKER_HUB = credentials('dockerhub-creds')
-    }
-
+    agent none
     stages {
-        stage("Build jar") {
+        stage('Build Jar') {
+            agent {
+                docker {
+                    image 'maven:3.9.3-eclipse-temurin-17-focal'
+                    args '-u root -v /tmp/m2:/root/.m2'
+                }
+            }
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+        stage('Build Image') {
             steps {
                 script {
-                    docker.image('maven:3.8.1-jdk-11').inside {
-                        sh "mvn clean package -DskipTests"
+                    app = docker.build('goldengros/selenium')
+                }
+            }
+        }
+
+        stage('Push Image'){
+            steps{
+                script {
+                    // registry url is blank for dockerhub
+                    docker.withRegistry('', 'dockerhub-creds') {
+                        app.push("latest")
                     }
                 }
             }
         }
 
-        stage("Build docker") {
-            steps {
-                sh "docker build -t=goldengros/selenium ."
-            }
-        }
-
-        stage("Push image") {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
-                        sh "docker push goldengros/selenium"
-                    }
-                }
-            }
-        }
-    }
-
-    post {
-        always {
-            sh "docker system prune -f"
-        }
     }
 }
